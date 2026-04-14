@@ -11,7 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-#[Fillable(['name', 'email', 'password'])]
+#[Fillable(['name', 'full_name', 'email', 'gender', 'date_of_birth', 'password'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -39,4 +39,13 @@ class User extends Authenticatable
     {
         return $this->hasOne(Profile::class);
     }
+    // Tambahkan di dalam class User
+    public function getAgeAttribute()
+    {
+        // Menghitung selisih tahun antara tanggal lahir dan sekarang
+        return \Carbon\Carbon::parse($this->date_of_birth)->age;
+    }
+
+    // Pastikan age disertakan saat model diubah ke JSON
+    protected $appends = ['age'];
 }

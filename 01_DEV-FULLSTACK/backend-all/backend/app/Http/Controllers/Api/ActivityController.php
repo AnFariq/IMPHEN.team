@@ -23,7 +23,7 @@ class ActivityController extends Controller
     // List semua jenis olahraga (untuk dropdown di Next.js)
     public function index()
     {
-        return response()->json(Activity::all());
+        return response()->json(Activity::orderBy('category')->get());
     }
 
     // Simpan catatan olahraga user
@@ -58,5 +58,17 @@ class ActivityController extends Controller
         $this->summaryService->updateDailySummary($user->id);
 
         return response()->json($burnRecord, 201);
+    }
+    // Ambil riwayat olahraga user (untuk history di React)
+    public function history(Request $request)
+    {
+        // Mengambil data dari tabel user_activity_burns milik user yang sedang login
+        // with('activity') digunakan agar relasi ke tabel activities (nama olahraga) ikut terbawa
+        $records = UserActivityBurn::with('activity')
+            ->where('user_id', $request->user()->id)
+            ->orderBy('created_at', 'desc') // Urutkan dari yang terbaru
+            ->get();
+
+        return response()->json($records);
     }
 }

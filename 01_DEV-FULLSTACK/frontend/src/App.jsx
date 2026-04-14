@@ -5,13 +5,28 @@ import { BrowserRouter as Router, Routes, Route, BrowserRouter } from 'react-rou
 // Pages
 import LandingP from './components/LandingP'
 import ButterflyWelcome from './components/ButterflyWelcome'
+import Login from './components/Login'
+import Register from './components/Register'
+import ForgotPassword from './components/Forgotpw'
+
+// ProtectedRoute
+import Dashboard from './pages/Dashboard'
+import Activity from './pages/Activity'
+import Profile from './pages/Profile'
+
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<ButterflyWelcome />} />
-        <Route path="/home" element={<LandingP />} />
+        <Route path="/landing" element={<LandingP />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/activity" element={<Activity />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </BrowserRouter>
   )

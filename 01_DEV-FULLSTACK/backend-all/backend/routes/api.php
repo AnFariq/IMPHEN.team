@@ -22,25 +22,30 @@ Route::post('/login', [AuthController::class, 'login']);
 |--------------------------------------------------------------------------
 */
 Route::middleware('auth:sanctum')->group(function () {
-    
+    // Profil User
+    Route::get('/profile', [AuthController::class, 'showProfile']);
+    Route::put('/profile', [AuthController::class, 'updateProfile']);
+
     // Auth & Profile
     Route::post('/logout', [AuthController::class, 'logout']);
-    
+
     // Makanan (CRUD & List)
     Route::get('/foods', [FoodController::class, 'index']);
     Route::post('/foods', [FoodController::class, 'store']);
     Route::get('/foods/{food}', [FoodController::class, 'show']);
-    
+
     // Catatan Makan (Intake)
     Route::post('/intakes', [IntakeController::class, 'store']);
-    
+
     // Aktivitas & Olahraga
     Route::get('/activities', [ActivityController::class, 'index']);
+    Route::get('/activities/record', [ActivityController::class, 'history']);
     Route::post('/activities/record', [ActivityController::class, 'store']);
-    
+
+
     // Dashboard & Grafik
     Route::get('/dashboard', [SummaryController::class, 'getDashboardData']);
-    
+
     // Machine Learning Proxy
     Route::post('/ml/predict-burn', [MLProxyController::class, 'predictBurn']);
 });

@@ -8,6 +8,7 @@ use App\Models\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -16,13 +17,19 @@ class AuthController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'full_name' => 'required|string|max:255',
             'email' => 'required|string|email|unique:users',
+            'gender' => 'required|string|in:male,female',
+            'date_of_birth' => 'required|date',
             'password' => 'required|string|min:8|confirmed',
         ]);
 
         $user = User::create([
             'name' => $request->name,
+            'full_name' => $request->full_name,
             'email' => $request->email,
+            'gender' => $request->gender,
+            'date_of_birth' => $request->date_of_birth,
             'password' => Hash::make($request->password),
         ]);
 
@@ -45,7 +52,6 @@ class AuthController extends Controller
         ], 201);
     }
 
-    // Login dan Generate Token
     public function login(Request $request)
     {
         $request->validate([
@@ -55,14 +61,31 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        if (! $user || ! Hash::check($request->password, $user->password)) {
+        if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json(['message' => 'Email atau password salah.'], 401);
         }
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
+        $sessionId = Str::random(40);
+
+        $payload = base64_encode(json_encode([
+            'user_id' => $user->id,
+            'email' => $user->email,
+        ]));
+
+        \DB::table('sessions')->insert([
+            'id' => $sessionId,
+            'user_id' => $user->id,
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->header('User-Agent'),
+            'payload' => $payload,
+            'last_activity' => now()->timestamp,
+        ]);
+
         return response()->json([
             'access_token' => $token,
+            'session_id' => $sessionId,
             'token_type' => 'Bearer',
             'user' => $user->load('profile')
         ]);
@@ -73,5 +96,50 @@ class AuthController extends Controller
     {
         $request->user()->currentAccessToken()->delete();
         return response()->json(['message' => 'Berhasil logout.']);
+    }
+    public function showProfile(Request $request)
+    {
+        $user = $request->user();
+        
+        return response()->json([
+            'user' => [
+                'name' => $user->name,
+                'email' => $user->email,
+                'age' => $user->age,
+            ],
+            'profile' => $user->profile
+        ]);
+    }
+
+    // Memperbarui data profil
+    public function updateProfile(Request $request)
+    {
+        $request->validate([
+            'weight' => 'required|numeric|min:1',
+            'height' => 'required|numeric|min:1',
+            'gender' => 'required|in:male,female',
+            'activity_level' => 'required|string',
+            'target_calories' => 'required|numeric|min:500',
+        ]);
+
+        $user = $request->user();
+
+        // Update data profilnya
+        $profile = Profile::updateOrCreate(
+            ['user_id' => $user->id],
+            [
+                'weight' => $request->weight,
+                'height' => $request->height,
+                'age' => $user->age,
+                'gender' => $request->gender,
+                'activity_level' => $request->activity_level,
+                'target_calories' => $request->target_calories,
+            ]
+        );
+
+        return response()->json([
+            'message' => 'Profil berhasil diperbarui!',
+            'profile' => $profile
+        ]);
     }
 }

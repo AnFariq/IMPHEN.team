@@ -12,6 +12,7 @@ class Activity extends Model
 
     protected $fillable = [
         'name',
+        'category',
         'met_value', // Nilai standar pembakaran kalori per aktivitas
     ];
 

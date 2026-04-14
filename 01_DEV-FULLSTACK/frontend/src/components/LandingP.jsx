@@ -1,154 +1,174 @@
 import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
-import { Sparkles, Utensils, BrainCircuit, Globe } from 'lucide-react';
+import { Utensils, BrainCircuit, Globe, Sparkles } from 'lucide-react';
 
 const LandingPage = () => {
+  const navigate = useNavigate();
 
   useEffect(() => {
-    /** * PROFESIONAL SCROLL RESET:
-     * Memaksa browser kembali ke koordinat (0,0) saat komponen dimount.
-     * Menggunakan 'instant' agar tidak terjadi visual scrolling yang mengganggu transisi.
-     */
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: 'instant'
-    });
-  }, []); // Array kosong memastikan ini hanya jalan sekali saat refresh/masuk halaman
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, []);
 
   return (
-    <div className="min-h-screen bg-[#FDFCFB] text-slate-800 font-sans overflow-x-hidden selection:bg-blue-100">
-      
-      {/* 1. Hero Section */}
-      <header className="relative pt-32 pb-24 px-6 min-h-[95vh] flex items-center overflow-hidden">
-        
-        {/* === THE INFINITE FLYING BUTTERFLY === */}
-        <div className="absolute inset-0 z-10 pointer-events-none">
+    <div className="min-h-screen bg-[#FDFCFB] text-slate-800 overflow-x-hidden">
+
+      {/* HERO */}
+      <section className="relative min-h-screen flex items-center px-6">
+
+        {/* Ambient */}
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute top-[-120px] right-[-120px] w-[500px] h-[500px] bg-blue-200/30 blur-[140px] rounded-full" />
+          <div className="absolute bottom-[-100px] left-[-100px] w-[400px] h-[400px] bg-green-200/20 blur-[140px] rounded-full" />
+        </div>
+
+        {/* Butterfly */}
+        <div className="absolute inset-0 pointer-events-none">
           <div className="relative w-full h-full max-w-6xl mx-auto">
-            <div className="absolute w-32 h-32 md:w-48 md:h-48 animate-butterfly-combined">
-              <div className="absolute inset-0 bg-blue-400/10 blur-[60px] rounded-full animate-pulse" />
-              
-              <DotLottieReact
-                src="butterfly.lottie"
-                loop autoplay
-                renderConfig={{ devicePixelRatio: window.devicePixelRatio }}
-                speed={0.8}
-              />
+            <div className="absolute w-40 h-40 animate-butterfly-combined opacity-70">
+              <DotLottieReact src="butterfly.lottie" loop autoplay />
             </div>
           </div>
         </div>
 
-        {/* Decorative Ambient */}
-        <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-blue-50/40 blur-[120px] -z-10" />
-        <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-green-50/20 blur-[100px] -z-10" />
+        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center w-full">
 
-        <div className="max-w-6xl mx-auto text-center relative z-20">
-          
-          <h1 className="text-5xl md:text-8xl font-extralight tracking-tighter leading-[1.05] mb-8 animate-fade-up [animation-delay:200ms] text-slate-900">
-            Healthy Lives & <br />
-            <span className="font-serif italic text-blue-600">Well-being</span>
-          </h1>
-          
-          <p className="max-w-2xl mx-auto text-slate-500 text-lg md:text-xl font-light leading-relaxed mb-12 animate-fade-up [animation-delay:400ms]">
-            Pendamping kesehatan cerdas yang memahami lidah Indonesia. Perpaduan 
-            <span className="text-blue-600 font-medium italic"> Vision-AI </span> 
-            dan database nutrisi kuliner lokal terlengkap.
-          </p>
+          {/* LEFT */}
+          <div className="space-y-8">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-full text-xs font-semibold">
+              <Sparkles className="w-4 h-4" /> Built for Indonesian Food AI
+            </div>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-5 animate-fade-up [animation-delay:600ms]">
-            <button className="px-12 py-4.5 rounded-full bg-blue-600 text-white font-bold text-[11px] tracking-[0.2em] uppercase hover:bg-blue-700 transition-all shadow-2xl shadow-blue-200 hover:-translate-y-1 active:scale-95">
-              Mulai Konsultasi AI
-            </button>
-            <button className="px-12 py-4.5 rounded-full bg-white border border-slate-200 text-slate-600 font-bold text-[11px] tracking-[0.2em] uppercase hover:bg-slate-50 transition-all hover:-translate-y-1 active:scale-95">
-              Pelajari Cara Kerja
-            </button>
+            <h1 className="text-5xl md:text-7xl font-extralight leading-tight tracking-tight">
+              AI That Understands <br />
+              <span className="text-blue-600 font-semibold">Indonesian Food</span>
+            </h1>
+
+            <p className="text-lg text-slate-500 leading-relaxed max-w-xl">
+              Kami membangun AI khusus untuk makanan Indonesia — dari nasi padang, gorengan, hingga makanan rumahan — untuk membantu diet yang realistis dan akurat.
+            </p>
+
+            <div className="flex gap-4">
+              <button
+                onClick={() => navigate('/login')}
+                className="px-8 py-4 bg-blue-600 text-white rounded-xl font-semibold shadow-lg shadow-blue-200 hover:scale-105 transition"
+              >
+                Try AI Now
+              </button>
+
+              <button className="px-8 py-4 bg-white border border-slate-200 rounded-xl text-slate-600 hover:shadow-md transition">
+                How It Works
+              </button>
+            </div>
           </div>
-        </div>
-      </header>
 
-      {/* 2. Features Grid */}
-      <section className="py-24 bg-white px-6 relative z-30">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <FeatureCard 
-              icon={<Utensils className="w-6 h-6" />}
-              title="Input Makanan Lokal"
-              desc="Analisis otomatis Nasi Padang hingga Sate dengan pengenalan visual cerdas."
-              color="bg-blue-50 text-blue-600"
-            />
-            <FeatureCard 
-              icon={<BrainCircuit className="w-6 h-6" />}
-              title="Analisis AI Presisi"
-              desc="Model AI yang di-fine-tune untuk mendeteksi komposisi bumbu tradisional Nusantara."
-              color="bg-purple-50 text-purple-600"
-            />
-            <FeatureCard 
-              icon={<Globe className="w-6 h-6" />}
-              title="Data Referensi Kemenkes"
-              desc="Kalibrasi nutrisi akurat berbasis TKPI (Tabel Komposisi Pangan Indonesia)."
-              color="bg-green-50 text-green-600"
-            />
+          {/* RIGHT */}
+          <div className="relative space-y-6">
+
+            {/* AI RESULT */}
+            <div className="bg-white/80 backdrop-blur-xl border border-white/40 shadow-2xl rounded-3xl p-6 space-y-4">
+              <h3 className="font-semibold">AI Food Analysis</h3>
+
+              <div className="space-y-3 text-sm">
+                <div className="flex justify-between">
+                  <span>Nasi Goreng</span>
+                  <span className="font-semibold">520 kcal</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Protein</span>
+                  <span className="font-semibold">18g</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Lemak</span>
+                  <span className="font-semibold">22g</span>
+                </div>
+              </div>
+
+              <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+                <div className="h-full w-2/3 bg-blue-500" />
+              </div>
+            </div>
+
+            {/* TEAM PIPELINE */}
+            <div className="bg-white border border-slate-100 rounded-2xl p-6 shadow">
+              <h4 className="text-sm font-semibold mb-3">Our AI System Pipeline</h4>
+              <div className="text-xs text-slate-500 space-y-2">
+                <p>• 2 Data Scientist → collect & clean Indonesian food dataset</p>
+                <p>• 2 AI Engineer → train calorie & nutrition model</p>
+                <p>• 2 Fullstack → build & deploy the AI system</p>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
 
-      <footer className="py-12 border-t border-slate-100 text-center bg-[#FDFCFB]">
-        <p className="text-[10px] tracking-[0.5em] text-slate-400 uppercase font-medium italic">
-          &copy; 2026 Healthy Lives & Well-being
-        </p>
+      {/* WHY INDONESIA */}
+      <section className="py-24 px-6 bg-white">
+        <div className="max-w-5xl mx-auto text-center space-y-6">
+          <h2 className="text-3xl md:text-4xl font-light">
+            Why Focus on Indonesia?
+          </h2>
+          <p className="text-slate-500 max-w-2xl mx-auto">
+            Sebagian besar aplikasi diet gagal karena tidak memahami makanan lokal.
+            Kami melatih AI dengan dataset makanan Indonesia agar hasil lebih akurat dan relevan.
+          </p>
+        </div>
+      </section>
+
+      {/* FEATURES */}
+      <section className="py-24 px-6">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-10">
+          <FeatureCard icon={<Utensils />} title="Food Detection" desc="Scan makanan Indonesia dengan akurasi tinggi" />
+          <FeatureCard icon={<BrainCircuit />} title="AI Nutrition" desc="Hitung kalori & nutrisi otomatis" />
+          <FeatureCard icon={<Globe />} title="Real Dataset" desc="Data dikurasi khusus makanan lokal" />
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-24 text-center px-6">
+        <h2 className="text-3xl font-light mb-4">Start Your Diet with Real Data</h2>
+        <p className="text-slate-500 mb-8">AI yang benar-benar paham apa yang kamu makan.</p>
+        <button
+          onClick={() => navigate('/login')}
+          className="px-10 py-4 bg-blue-600 text-white rounded-xl font-semibold hover:scale-105 transition"
+        >
+          Get Started
+        </button>
+      </section>
+
+      <footer className="py-10 text-center text-sm text-slate-400">
+        © 2026 Healthy AI Indonesia
       </footer>
 
       <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=Plus+Jakarta+Sans:wght@200;300;400;700&display=swap');
-        
-        .font-serif { font-family: 'Instrument Serif', serif; }
-
         @keyframes hero-intro {
-          from { 
-            transform: translate(100vw, 50vh) rotate(-20deg) scale(0.4); 
-            opacity: 0; 
-          }
-          to { 
-            transform: translate(85%, 10%) rotate(0deg) scale(0.8); 
-            opacity: 1; 
-          }
+          from { transform: translate(100vw, 50vh) scale(0.4); opacity: 0; }
+          to { transform: translate(80%, 10%) scale(0.8); opacity: 1; }
         }
 
         @keyframes hero-free-fly {
-          0%, 100% { transform: translate(85%, 10%) rotate(0deg) scale(0.8); }
-          25% { transform: translate(10%, 20%) rotate(-10deg) scale(1); }
-          50% { transform: translate(15%, 70%) rotate(5deg) scale(0.9); }
-          75% { transform: translate(80%, 75%) rotate(15deg) scale(1); }
+          0%,100% { transform: translate(80%,10%) scale(0.8); }
+          25% { transform: translate(10%,20%) scale(1); }
+          50% { transform: translate(20%,70%) scale(0.9); }
+          75% { transform: translate(75%,75%) scale(1); }
         }
 
         .animate-butterfly-combined {
-          animation: 
-            hero-intro 2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards,
-            hero-free-fly 20s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite 2s;
-        }
-
-        @keyframes fade-up {
-          from { opacity: 0; transform: translateY(30px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fade-up { animation: fade-up 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; opacity: 0; }
-        
-        body { 
-          margin: 0;
-          scroll-behavior: smooth;
+          animation:
+            hero-intro 2s ease forwards,
+            hero-free-fly 20s linear infinite 2s;
         }
       `}</style>
     </div>
   );
 };
 
-const FeatureCard = ({ icon, title, desc, color }) => (
-  <div className="group space-y-6 p-8 rounded-[32px] hover:bg-white hover:shadow-2xl hover:shadow-blue-100/50 transition-all duration-500 border border-transparent hover:border-blue-50">
-    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110 duration-500 ${color}`}>
-      {icon}
-    </div>
-    <h3 className="text-xl font-medium tracking-tight text-slate-800 italic">{title}</h3>
-    <p className="text-slate-500 font-light leading-relaxed text-sm">{desc}</p>
+const FeatureCard = ({ icon, title, desc }) => (
+  <div className="p-8 rounded-2xl bg-white shadow hover:shadow-xl transition border border-slate-100">
+    <div className="mb-4 text-blue-600">{icon}</div>
+    <h3 className="text-lg font-semibold mb-2">{title}</h3>
+    <p className="text-sm text-slate-500">{desc}</p>
   </div>
 );
 

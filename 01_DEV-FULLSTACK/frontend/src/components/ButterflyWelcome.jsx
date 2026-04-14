@@ -20,7 +20,7 @@ const ButterflyWelcome = () => {
   const handleStart = (e) => {
     e.preventDefault();
     setIsExiting(true);
-    setTimeout(() => navigate('/home'), 900); 
+    setTimeout(() => navigate('/landing'), 900); 
   };
 
   return (
