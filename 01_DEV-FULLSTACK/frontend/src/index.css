@@ -1,0 +1,28 @@
+/* index.css */
+@import "tailwindcss";
+
+/* index.css — tambahkan ini */
+@keyframes butterflyFlyIn {
+  0% {
+    bottom: -80px;
+    left:   -80px;
+    transform: rotate(30deg) scale(0.5);
+    opacity: 0;
+  }
+  15% { opacity: 1; }
+  100% {
+    bottom: calc(50% - 48px);  /* tepat di tengah vertikal */
+    left:   calc(50% - 48px);  /* tepat di tengah horizontal */
+    transform: rotate(0deg) scale(1);
+    opacity: 1;
+  }
+}
+
+.butterfly-container {
+  position: absolute;
+  width: 96px;
+  height: 96px;
+  animation: butterflyFlyIn 2.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  z-index: 10;
+}
+
