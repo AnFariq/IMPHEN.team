@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\IntakeController;
 use App\Http\Controllers\Api\ActivityController;
 use App\Http\Controllers\Api\SummaryController;
 use App\Http\Controllers\Api\MLProxyController;
+use App\Http\Controllers\Api\PasswordResetController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +16,8 @@ use App\Http\Controllers\Api\MLProxyController;
 */
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/forgot-password', [PasswordResetController::class, 'sendResetLinkEmail']);
+Route::post('/reset-password', [PasswordResetController::class, 'reset']);
 
 /*
 |--------------------------------------------------------------------------

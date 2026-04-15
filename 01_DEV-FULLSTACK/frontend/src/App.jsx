@@ -8,6 +8,7 @@ import ButterflyWelcome from './components/ButterflyWelcome'
 import Login from './components/Login'
 import Register from './components/Register'
 import ForgotPassword from './components/Forgotpw'
+import ResetPassword from './components/ResetPassword'
 
 // ProtectedRoute
 import Dashboard from './pages/Dashboard'
@@ -24,6 +25,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/activity" element={<Activity />} />
         <Route path="/profile" element={<Profile />} />
